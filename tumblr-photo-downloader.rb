@@ -31,11 +31,15 @@ loop do
     threads = []
     group.each do |url|
       threads << Thread.new {
-        puts "Saving photo #{url}"
         begin
           file = Mechanize.new.get(url)
           filename = File.basename(file.uri.to_s.split('?')[0])
-          file.save_as("#{site}/#{filename}")
+          if !File.exist?("#{site}/#{filename}")
+            puts "Saving photo #{url}"
+            file.save_as("#{site}/#{filename}")
+          else
+            puts "Skip #{url}"
+          end
         rescue Mechanize::ResponseCodeError
           puts "Error getting file, #{$!}"
         end
