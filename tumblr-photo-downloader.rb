@@ -39,14 +39,6 @@ loop do
         begin
           file = Mechanize.new.get(url)
           filename = File.basename(file.uri.to_s.split('?')[0])
-<<<<<<< HEAD
-          if !File.exist?("#{site}/#{filename}")
-            puts "Saving photo #{url}"
-            file.save_as("#{site}/#{filename}")
-          else
-            puts "Skip #{url}"
-          end
-=======
           
           if File.exists?("#{directory}/#{filename}")
             puts "Already have #{url}"
@@ -56,7 +48,6 @@ loop do
             file.save_as("#{directory}/#{filename}")
           end
 
->>>>>>> upstream/master
         rescue Mechanize::ResponseCodeError
           puts "Error getting file, #{$!}"
         end
